@@ -24,7 +24,7 @@ export const Login = () => {
     e.preventDefault();
     //agregar ruta
     axios
-      .post("", {
+      .post("http://localhost:3001/api/user/login", {
         name: userName,
         password: password,
       })
