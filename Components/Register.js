@@ -60,7 +60,6 @@ export const Register=()=>{
                     textAlign="start" 
                     p= "0.25em" 
                     fontSize="40px"
-                    p= "0.25em"
                     >
                     WOW! 
                     <br/>
