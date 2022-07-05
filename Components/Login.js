@@ -10,8 +10,44 @@ import {
   Button,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export const Login = () => {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate;
+
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    //agregar ruta
+    axios
+      .post("", {
+        name: userName,
+        password: password,
+      })
+      .then((res) => {
+        setUserName(res.data);
+        localStorage.setItem("user", res.data);
+        if (userName.length === "" && password.length === "") {
+          alert("Usuario o contraseña incorrecta. Vuelve a intentarlo");
+        } else {
+          navigate();
+        }
+      })
+      .catch((err) => alert("Aun no esta registrado."));
+  };
+
+  const handlerUserName = (e) => {
+    setUserName(e.target.value);
+  };
+
+  const handlerPassword = (e) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <Box
       width="100%"
@@ -19,7 +55,7 @@ export const Login = () => {
       justify-content="flex-end"
       position="relative"
     >
-      <Box width="40%" margin="10px 5% 1em">
+      <Box width="40%" margin="10px 5% 1em" onSubmit={handlerSubmit}>
         <Text color="#ED2D6E" textAlign="start" p="0.25em" fontSize="40px">
           WOW!
           <br />
@@ -41,7 +77,13 @@ export const Login = () => {
               <br />
             </FormLabel>
           </b>
-          <Input id="user-name" type="user-name" width="300px" />
+          <Input
+            id="user-name"
+            type="user-name"
+            width="300px"
+            value={userName}
+            onChange={handlerUserName}
+          />
           <FormHelperText>
             Ingresá tu cuenta de Redacción Ohlalá.
           </FormHelperText>
@@ -60,6 +102,8 @@ export const Login = () => {
             type="password"
             width="300px"
             textAlign="center"
+            value={password}
+            onChange={handlerPassword}
           />
 
           <FormHelperText>
@@ -80,14 +124,16 @@ export const Login = () => {
         </Button>
         <br />
 
-        <Text
-          color="#E32B6C"
-          /*textAlign="center"*/
-        >
+        <Text color="#E32B6C" textAlign="center">
           <br />
           ¿Olvidaste tu clave?
         </Text>
-        <Link href="http://localhost:3002/register">Register</Link>
+        <br />
+        <Box color="#E32B6C" textAlign="center">
+          <Link color="#E32B6C" href="http://localhost:3000/register">
+            Si no tienes un usuario registrate aqui.
+          </Link>
+        </Box>
       </Box>
 
       <Box width="60%" height="100%" display="flex">
