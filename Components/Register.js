@@ -23,8 +23,8 @@ export const Register=()=>{
     const [passwordError, setPasswordError] = useState(false)
 
     const handleName=(e)=>{
-        setNameError(false)
-        setName(e.target.value)
+       setNameError(false)
+       setName(e.target.value)
     }
 
     const handlePassword=(e)=>{
@@ -33,11 +33,18 @@ export const Register=()=>{
     }
 
     const handleEmail=(e)=>{
+        console.log(email)
         setMailError(false)
         setEmail(e.target.value)
     }
     
     const handleClick = (e) => {
+        if(name==""){
+            setNameError(true)
+        }
+        if(password==""){
+            setPasswordError(true)
+        }
         if(email==""){
             setMailError(true)
         }
@@ -80,8 +87,6 @@ export const Register=()=>{
                     <b>
                         <FormLabel 
                             htmlFor='user-name' 
-                            value={name}
-                            onChange={handleName}
                             >
                             <br/>
                             Nombre de usuario.
@@ -92,6 +97,8 @@ export const Register=()=>{
                         id='user-name' 
                         type='user-name' 
                         width="300px" 
+                        value={name}
+                        onChange={handleName}
                     />
                     {!nameError ? (
                         <FormHelperText>
