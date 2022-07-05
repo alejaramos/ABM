@@ -37,7 +37,7 @@ export const Login=()=>{
                     textAlign="start" 
                     p= "0.25em" 
                     fontSize="40px"
-                    p= "0.25em"
+              
                     >
                     WOW! 
                     <br/>
@@ -116,7 +116,7 @@ export const Login=()=>{
                     <br/>
                     ¿Olvidaste tu clave?
                 </Text>
-                <Link href="http://localhost:3002/register" >
+                <Link href="http://localhost:3000/register" >
                     Register 
                 </Link>
 
