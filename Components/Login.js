@@ -13,8 +13,10 @@ import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export const Login = () => {
+  const router = useRouter();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,6 +30,7 @@ export const Login = () => {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         alert(`Welcome ${res.data.name}`);
+        router.push;
       })
       .catch((err) => {
         alert("invalid user or password"), console.log(err);
@@ -78,9 +81,7 @@ export const Login = () => {
             value={userName}
             onChange={handlerUserName}
           />
-          <FormHelperText>
-            Ingresá tu cuenta de Redacción Ohlalá.
-          </FormHelperText>
+          <FormHelperText>Ingresá tu cuenta de Redacción WOW.</FormHelperText>
         </FormControl>
 
         <FormControl>
