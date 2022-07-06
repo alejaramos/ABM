@@ -23,10 +23,10 @@ const Histories = ({ newses }) => {
   const estado = useInput();
 
   const handleCLick = () => {
-    console.log('entro al click')
+    
     const result = newses.filter(
-      (news) =>news.title == title.value || news.field_credits == credit.value || news.field_category == category.value);
-    // console.log("🚀 ~ file: Histories.js ~ line 29 ~ handleCLick ~ result", result)
+      (news) =>news.title==title.value || news.field_credits==credit.value || news.field_category == category.value);
+  
     result.length == 0? setRenderedNews(newses):setRenderedNews(result);
   };
 
@@ -39,15 +39,17 @@ const Histories = ({ newses }) => {
         py="0.25em"
       >
         <Heading>Historias</Heading>
+        <Link href="/selected/newHistorie">
         <Button
           backgroundColor=" #E32B6C"
           color="white"
           borderRadius="40px"
           my="0.5em"
           height="30px"
-        >
+          >
           + Crear
         </Button>
+          </Link>
       </Box>
       <Box
         width="90%"

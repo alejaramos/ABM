@@ -164,12 +164,9 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
-  // const user = localStorage.getItem("user")
-  //   ? JSON.parse(localStorage?.getItem("user"))
-  //   : "";
+
   const router = useRouter();
   const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
-  console.log("🚀 ~ file: SideBar.js ~ line 172 ~ MobileNav ~ user", user)
 
   const logoutHandler = () => {
     axios

@@ -13,17 +13,16 @@ const authContextDefaultValues = {
     }
     }
 
-    const setToStorage = (key,value) => {
-        if(typeof window !== 'undefined'){
-             return window.localstorage.setItem(key,value)
-        }
-        }
+    // const setToStorage = (key,value) => {
+    //     if(typeof window !== 'undefined'){
+    //          return window.localstorage.setItem(key,value)
+    //     }
+    //     }
 
  export const AuthContext = createContext(authContextDefaultValues);
 
 
 export const AuthContextProvider=({children})=>{
-    console.log("🚀 ~ file: AuthContext.js ~ line 23 ~ AuthContextProvider ~ getFromStorage", getFromStorage("user"))
 
     const [isLoggedIn, setIsLoggedIn]=useState({
          user: getFromStorage("user")!=undefined? JSON.parse(getFromStorage("user")) : null, 
@@ -31,7 +30,6 @@ export const AuthContextProvider=({children})=>{
     })
 
     const toggleAuth = (user) =>{
-    console.log("🚀 ~ file: AuthContext.js ~ line 34 ~ toggleAuth ~ user", user)
         
         setIsLoggedIn({
             user:user,
