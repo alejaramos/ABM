@@ -20,7 +20,6 @@ export const Login=()=>{
              justify-content="flex-end" 
              position="relative"
             >
-
             <Box 
                 width="40%" 
                 margin= "10px 5% 1em"

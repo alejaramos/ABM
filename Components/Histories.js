@@ -27,7 +27,7 @@ const Histories = ({ newses }) => {
     const result = newses.filter(
       (news) =>news.title == title.value || news.field_credits == credit.value || news.field_category == category.value);
     // console.log("🚀 ~ file: Histories.js ~ line 29 ~ handleCLick ~ result", result)
-    result.length == 0? setRenderedNews(newses):setRenderedNews(result);
+    result.length === 0? setRenderedNews(newses):setRenderedNews(result);
   };
 
   return (
