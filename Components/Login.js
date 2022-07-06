@@ -15,15 +15,20 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { AuthContext } from "../Context/AuthContext";
 
 export const Login = () => {
+
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+
   const [validation, setValidation] = useState(true)
 
+  const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
   const handlerSubmit = (e) => {
     e.preventDefault();
 
@@ -35,8 +40,11 @@ export const Login = () => {
         password: password,
       })
       .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data));
-        //alert(`Welcome ${res.data.name}`);
+
+        toggleAuth(res.data);
+        alert(`Welcome ${res.data.name}`);
+        router.push("edition/Historias");
+
       })
       .catch((err) => {
           setValidation(false)
@@ -111,9 +119,7 @@ export const Login = () => {
             value={userName}
             onChange={handlerUserName}
           />
-          <FormHelperText>
-            Ingresá tu cuenta de Redacción Ohlalá.
-          </FormHelperText>
+          <FormHelperText>Ingresá tu cuenta de Redacción WOW.</FormHelperText>
         </FormControl>
 
         <FormControl>
