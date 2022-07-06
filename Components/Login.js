@@ -16,7 +16,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { AuthContext } from "../Context/AuthContext";
 
+
 export const Login = () => {
+  const router = useRouter();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
     const router=useRouter()
@@ -82,9 +84,7 @@ export const Login = () => {
             value={userName}
             onChange={handlerUserName}
           />
-          <FormHelperText>
-            Ingresá tu cuenta de Redacción Ohlalá.
-          </FormHelperText>
+          <FormHelperText>Ingresá tu cuenta de Redacción WOW.</FormHelperText>
         </FormControl>
 
         <FormControl>
