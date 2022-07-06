@@ -12,32 +12,26 @@ import {
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import axios from "axios";
 
 export const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate;
-
   const handlerSubmit = (e) => {
     e.preventDefault();
-    //agregar ruta
     axios
       .post("http://localhost:3001/api/user/login", {
         name: userName,
         password: password,
       })
       .then((res) => {
-        setUserName(res.data);
-        localStorage.setItem("user", res.data);
-        if (userName.length === "" && password.length === "") {
-          alert("Usuario o contraseña incorrecta. Vuelve a intentarlo");
-        } else {
-          navigate();
-        }
+        localStorage.setItem("user", JSON.stringify(res.data));
+        alert(`Welcome ${res.data.name}`);
       })
-      .catch((err) => alert("Aun no esta registrado."));
+      .catch((err) => {
+        alert("invalid user or password"), console.log(err);
+      });
   };
 
   const handlerUserName = (e) => {
@@ -55,7 +49,7 @@ export const Login = () => {
       justify-content="flex-end"
       position="relative"
     >
-      <Box width="40%" margin="10px 5% 1em" onSubmit={handlerSubmit}>
+      <Box width="40%" margin="10px 5% 1em">
         <Text color="#ED2D6E" textAlign="start" p="0.25em" fontSize="40px">
           WOW!
           <br />
@@ -119,6 +113,7 @@ export const Login = () => {
           width="400px"
           height="50px"
           textAlign="center"
+          onClick={handlerSubmit}
         >
           Iniciar sesión
         </Button>
@@ -130,7 +125,7 @@ export const Login = () => {
         </Text>
         <br />
         <Box color="#E32B6C" textAlign="center">
-          <Link color="#E32B6C" href="http://localhost:3000/register">
+          <Link color="#E32B6C" href="http://localhost:8000/register">
             Si no tienes un usuario registrate aqui.
           </Link>
         </Box>
