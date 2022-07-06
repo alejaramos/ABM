@@ -10,130 +10,130 @@ import {
   Button,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
 
-export const Login=()=>{
+export const Login = () => {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
-    return(
-        <Box 
-             width="100%"
-             display="flex" 
-             justify-content="flex-end" 
-             position="relative"
-            >
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/api/user/login", {
+        name: userName,
+        password: password,
+      })
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        alert(`Welcome ${res.data.name}`);
+      })
+      .catch((err) => {
+        alert("invalid user or password"), console.log(err);
+      });
+  };
 
-            <Box 
-                width="40%" 
-                margin= "10px 5% 1em"
-                >
-                <Text 
-                    color="#ED2D6E" 
-                    textAlign="start" 
-                    p= "0.25em" 
-                    fontSize="40px"
-              
-                    >
-                    WOW! 
-                    <br/>
-                </Text>
-                
-                <b>
-                    <Text 
-                        fontSize="40px"
-                        >
-                        <br/>
-                        Iniciar sesión
-                        <br/>
-                    </Text>
-                </b>
+  const handlerUserName = (e) => {
+    setUserName(e.target.value);
+  };
 
-                <FormControl>
-                    <b>
-                        <FormLabel 
-                            htmlFor='user-name' 
-                            >
-                            <br/>
-                            Nombre de usuario.
-                            <br/>
-                        </FormLabel>
-                    </b>
-                <Input 
-                    id='user-name' 
-                    type='user-name' 
-                    width="300px" 
-                />
-                <FormHelperText>
-                    Ingresá tu cuenta de Redacción Ohlalá.
-                    </FormHelperText>
+  const handlerPassword = (e) => {
+    setPassword(e.target.value);
+  };
 
-                </FormControl>
+  return (
+    <Box
+      width="100%"
+      display="flex"
+      justify-content="flex-end"
+      position="relative"
+    >
+      <Box width="40%" margin="10px 5% 1em">
+        <Text color="#ED2D6E" textAlign="start" p="0.25em" fontSize="40px">
+          WOW!
+          <br />
+        </Text>
 
-                <FormControl>
-                <b>
-                    <FormLabel 
-                        htmlFor='password' 
-                        >
-                        <br/>
-                        Contraseña.
-                    </FormLabel>
-                </b>
+        <b>
+          <Text fontSize="40px">
+            <br />
+            Iniciar sesión
+            <br />
+          </Text>
+        </b>
 
-                <Input 
-                    id='password' 
-                    type='password' 
-                    width="300px" 
-                    textAlign="center"  
-                />
+        <FormControl>
+          <b>
+            <FormLabel htmlFor="user-name">
+              <br />
+              Nombre de usuario.
+              <br />
+            </FormLabel>
+          </b>
+          <Input
+            id="user-name"
+            type="user-name"
+            width="300px"
+            value={userName}
+            onChange={handlerUserName}
+          />
+          <FormHelperText>
+            Ingresá tu cuenta de Redacción Ohlalá.
+          </FormHelperText>
+        </FormControl>
 
-                <FormHelperText>
-                    Ingresá la clave asociada a la cuenta.
-                </FormHelperText>
-                <br/>
-                </FormControl>
+        <FormControl>
+          <b>
+            <FormLabel htmlFor="password">
+              <br />
+              Contraseña.
+            </FormLabel>
+          </b>
 
-                <Button
-                     backgroundColor=" #E32B6C" 
-                     color="white" 
-                     borderRadius="40px" 
-                     width="400px" 
-                     height="50px" 
-                     textAlign="center" 
-                     >
-                     Iniciar sesión
-                </Button>
-                <br/>
-                
-                <Text 
-                    color="#E32B6C" 
-                    /*textAlign="center"*/ 
-                    >
-                    <br/>
-                    ¿Olvidaste tu clave?
-                </Text>
-                <Link href="http://localhost:3000/register" >
-                    Register 
-                </Link>
+          <Input
+            id="password"
+            type="password"
+            width="300px"
+            textAlign="center"
+            value={password}
+            onChange={handlerPassword}
+          />
 
-            </Box>
+          <FormHelperText>
+            Ingresá la clave asociada a la cuenta.
+          </FormHelperText>
+          <br />
+        </FormControl>
 
-            <Box 
-                width="60%" 
-                height="100%" 
-                display="flex"
-                >
-                
-                <Image 
-                    src='/escritorioOhlalá.webp' 
-                    alt='Article' 
-                    height="100%"
-                />
+        <Button
+          backgroundColor=" #E32B6C"
+          color="white"
+          borderRadius="40px"
+          width="400px"
+          height="50px"
+          textAlign="center"
+          onClick={handlerSubmit}
+        >
+          Iniciar sesión
+        </Button>
+        <br />
 
-            </Box>
-
-            <Box width="60%" height="100%" display="flex">
-        <Image src="/escritorioOhlalá.webp" alt="Article" height="100%" />
+        <Text color="#E32B6C" textAlign="center">
+          <br />
+          ¿Olvidaste tu clave?
+        </Text>
+        <br />
+        <Box color="#E32B6C" textAlign="center">
+          <Link color="#E32B6C" href="http://localhost:8000/register">
+            Si no tienes un usuario registrate aqui.
+          </Link>
+        </Box>
       </Box>
 
-        </Box>
-  
+      <Box width="60%" height="100%" display="flex">
+        <Image src="/escritorioOhlalá.webp" alt="Article" height="100%" />
+      </Box>
+    </Box>
   );
 };
