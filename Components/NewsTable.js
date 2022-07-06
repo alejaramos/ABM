@@ -33,15 +33,16 @@ const NewsTable = ({ newses }) => {
     setI(id);
     onOpen();
   };
+
   const deleteClick = () => {
     axios
       .delete(`http://localhost:3001/api/news/${i}`)
       .then(() => onClose())
-      .then(() =>
-        axios
-          .get("http://localhost:3001/api/news/newses")
-          .then((result) => setRenderedNews(result.data))
-      )
+      .then(() => {
+        const index = renderedNews.findIndex((news) => news._id == i);
+        renderedNews.splice(index, 1);
+        setRenderedNews(renderedNews);
+      })
       .catch((code) => console.error("error", code));
   };
 

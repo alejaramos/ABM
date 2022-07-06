@@ -12,8 +12,10 @@ import {
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export const Register = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -47,7 +49,14 @@ export const Register = () => {
             password: password,
             name: name,
           })
-          .then((user) => console.log(user));
+          .then((res) => {
+            alert("User created succesfully");
+            router.push("/");
+          })
+          .catch((err) => {
+            console.log(err);
+            alert(err.response.data.message);
+          });
   };
 
   return (
