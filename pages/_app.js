@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import SidebarWithHeader from "../Components/SideBar";
 
 
+
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
