@@ -1,24 +1,17 @@
-import { 
-    Box, 
-    Image, 
-    Text, 
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-    Input,
-    Button
-    
+import {
+  Box,
+  Image,
+  Text,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+  Button,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
 export const Login=()=>{
-
-
-
-
-
-
 
     return(
         <Box 
@@ -37,6 +30,7 @@ export const Login=()=>{
                     textAlign="start" 
                     p= "0.25em" 
                     fontSize="40px"
+              
                     >
                     WOW! 
                     <br/>
@@ -132,8 +126,14 @@ export const Login=()=>{
                     alt='Article' 
                     height="100%"
                 />
+
             </Box>
 
+            <Box width="60%" height="100%" display="flex">
+        <Image src="/escritorioOhlalá.webp" alt="Article" height="100%" />
+      </Box>
+
         </Box>
-    )
-}
+  
+  );
+};

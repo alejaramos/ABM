@@ -1,8 +1,8 @@
-import SidebarWithHeader from "../../Components/SideBar";
 import { Box,Grid, GridItem, Heading, Button, IconButton, Icon,useMediaQuery } from "@chakra-ui/react";
 import { useRouter } from 'next/router'
 import Histories from "../../Components/Histories";
 import WorkingOn from "../../Components/WorkingOn";
+import SidebarWithHeader from "../../Components/SideBar";
 
 
 export default function Option({newses}) {
@@ -10,9 +10,7 @@ export default function Option({newses}) {
     const router = useRouter()
     const { option} = router.query
 
-  
 
-    
   return (
     <>
     <SidebarWithHeader></SidebarWithHeader>
