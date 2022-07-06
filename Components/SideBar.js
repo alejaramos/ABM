@@ -133,7 +133,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
 const NavItem = ({ icon, children, ...rest }) => {
   return (
     <Link
-      href={`http://localhost:3000/edition/${children}`}
+      href={`http://localhost:8000/edition/${children}`}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
