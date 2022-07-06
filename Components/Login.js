@@ -11,15 +11,18 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { AuthContext } from "../Context/AuthContext";
+
 
 export const Login = () => {
   const router = useRouter();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
+    const router=useRouter()
+    const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
   const handlerSubmit = (e) => {
     e.preventDefault();
     axios
@@ -28,9 +31,9 @@ export const Login = () => {
         password: password,
       })
       .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data));
+        toggleAuth(res.data);
         alert(`Welcome ${res.data.name}`);
-        router.push;
+        router.push('edition/Historias')
       })
       .catch((err) => {
         alert("invalid user or password"), console.log(err);

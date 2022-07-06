@@ -20,7 +20,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  Spacer
+  Spacer,
 } from "@chakra-ui/react";
 import {
   FiFileText,
@@ -41,8 +41,11 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
-import ReactText from "react";
-import Link from 'next/link'
+import {useContext} from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { AuthContext } from "../Context/AuthContext";
 
 const LinkItems = [
   { name: "Historias", icon: FiFileText },
@@ -63,9 +66,7 @@ const LinkItems = [
 export default function SidebarWithHeader() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-  
-      <Flex direction="column" id="menus">
-        
+    <Flex direction="column" id="menus">
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -81,19 +82,17 @@ export default function SidebarWithHeader() {
       >
         <DrawerContent>
           <SidebarContent onClose={onClose} />
-        </DrawerContent> 
+        </DrawerContent>
       </Drawer>
       {/* mobilenav */}
 
-      <Box ml={{ base: 0 }} > <MobileNav onOpen={onOpen} /></Box>
- 
-     
-      </Flex>
-  
+      <Box ml={{ base: 0 }}>
+        {" "}
+        <MobileNav onOpen={onOpen} />
+      </Box>
+    </Flex>
   );
 }
-
-
 
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
@@ -107,7 +106,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
       h="full"
       {...rest}
       id="menu"
-      
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text
@@ -123,7 +121,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {LinkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon}>
           {link.name}
-        
         </NavItem>
       ))}
     </Box>
@@ -166,8 +163,18 @@ const NavItem = ({ icon, children, ...rest }) => {
   );
 };
 
-
 const MobileNav = ({ onOpen, ...rest }) => {
+
+  const router = useRouter();
+  const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
+
+  const logoutHandler = () => {
+    axios
+      .post("http://localhost:3001/api/user/logout")
+      .then(()=>toggleAuth(null))
+      .then(() => router.push("/"))
+      .catch((err) => console.log(err));
+  };
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -228,7 +235,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">{user?.name}</Text>
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>
@@ -246,7 +253,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={logoutHandler}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
