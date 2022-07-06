@@ -8,6 +8,10 @@ import {
   FormHelperText,
   Input,
   Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
@@ -18,8 +22,13 @@ export const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  const [validation, setValidation] = useState(true)
+
   const handlerSubmit = (e) => {
     e.preventDefault();
+
+
+
     axios
       .post("http://localhost:3001/api/user/login", {
         name: userName,
@@ -27,10 +36,10 @@ export const Login = () => {
       })
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
-        alert(`Welcome ${res.data.name}`);
+        //alert(`Welcome ${res.data.name}`);
       })
       .catch((err) => {
-        alert("invalid user or password"), console.log(err);
+          setValidation(false)
       });
   };
 
@@ -49,6 +58,27 @@ export const Login = () => {
       justify-content="flex-end"
       position="relative"
     >
+        {!validation?(
+            <Alert
+            status='error'
+            variant='subtle'
+            flexDirection='column'
+            alignItems='center'
+            justifyContent='center'
+            textAlign='center'
+            height='200px'
+            width="350px"
+            position="fixed"
+            margin="0 auto"
+            left="35%"
+            >
+            <AlertIcon boxSize='40px' mr={0} />
+            <AlertDescription  maxWidth='sm'>
+                Usuario y/o contraseña incorrecta.
+            </AlertDescription>
+            </Alert>
+        ):(<></>)}
+
       <Box width="40%" margin="10px 5% 1em">
         <Text color="#ED2D6E" textAlign="start" p="0.25em" fontSize="40px">
           WOW!
@@ -62,6 +92,9 @@ export const Login = () => {
             <br />
           </Text>
         </b>
+
+        
+
 
         <FormControl>
           <b>
@@ -106,25 +139,28 @@ export const Login = () => {
           <br />
         </FormControl>
 
-        <Button
-          backgroundColor=" #E32B6C"
-          color="white"
-          borderRadius="40px"
-          width="400px"
-          height="50px"
-          textAlign="center"
-          onClick={handlerSubmit}
-        >
-          Iniciar sesión
-        </Button>
+        {/* agregarle ruta */}
+        <Link href="http://localhost:8000/">
+            <Button
+            backgroundColor=" #E32B6C"
+            color="white"
+            borderRadius="40px"
+            width="400px"
+            height="50px"
+            textAlign="center"
+            onClick={handlerSubmit}
+            >
+            Iniciar sesión
+            </Button>
+        </Link>
         <br />
 
-        <Text color="#E32B6C" textAlign="center">
+        <Text color="#E32B6C" >
           <br />
           ¿Olvidaste tu clave?
         </Text>
         <br />
-        <Box color="#E32B6C" textAlign="center">
+        <Box color="#E32B6C" >
           <Link color="#E32B6C" href="http://localhost:8000/register">
             Si no tienes un usuario registrate aqui.
           </Link>
