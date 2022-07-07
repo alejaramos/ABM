@@ -25,26 +25,23 @@ export const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+const router=useRouter()
 
   const [validation, setValidation] = useState(true)
 
   const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
+
   const handlerSubmit = (e) => {
     e.preventDefault();
-
-
-
     axios
       .post("http://localhost:3001/api/user/login", {
         name: userName,
         password: password,
       })
       .then((res) => {
-
         toggleAuth(res.data);
         alert(`Welcome ${res.data.name}`);
-        router.push("edition/Historias");
-
+        router.push("/edition/Historias");
       })
       .catch((err) => {
           setValidation(false)

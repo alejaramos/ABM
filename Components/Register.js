@@ -71,12 +71,12 @@ export const Register = () => {
               name: name,
             })
             .then((res) => {
-                alert("User created succesfully");
+                alert("Bienvenido");
                 router.push("/");
               })
               .catch((err) => {
+                alert("No pudo registrarse");
                 console.log(err);
-                //alert(err.response.data.message);
               });
     }
   };
