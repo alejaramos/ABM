@@ -79,7 +79,7 @@ export default function HeaderDrawer() {
   const router = useRouter();
   const logoutHandler = () => {
     axios
-      .post("http://localhost:3001/api/user/logout")
+      .post("https://rito-mono.herokuapp.com/api/user/logout")
       .then(() => {
         router.push("/");
         toggleAuth(null);

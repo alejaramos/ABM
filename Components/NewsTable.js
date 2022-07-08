@@ -36,7 +36,7 @@ const NewsTable = ({ newses }) => {
 
   const deleteClick = () => {
     axios
-      .delete(`http://localhost:3001/api/news/${i}`)
+      .delete(`https://rito-mono.herokuapp.com/api/news/${i}`)
       .then(() => onClose())
       .then(() => {
         const index = renderedNews.findIndex((news) => news._id == i);

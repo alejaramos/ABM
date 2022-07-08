@@ -66,7 +66,7 @@ const ArticleEdition = () => {
     e.preventDefault();
     console.log("entre", titulo.value, volanta.value, autor.value, items);
     axios
-      .post("http://localhost:3001/api/news", {
+      .post("https://rito-mono.herokuapp.com/api/news", {
         title: titulo.value,
         subtitle: volanta.value,
         field_credits: autor.value,
