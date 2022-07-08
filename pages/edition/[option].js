@@ -33,7 +33,7 @@ export default function Option({newses}) {
   );
 }
 export async function getServerSideProps() {
-  const req = await fetch(`http://localhost:3001/api/news/newses`);
+  const req = await fetch(`https://rito-mono.herokuapp.com/api/news/newses`);
   const data = await req.json();
   // console.log("🚀 ~ file: Histories.js ~ line 70 ~ getServerSideProps ~ data", data)
   return { props: { newses: data } };
