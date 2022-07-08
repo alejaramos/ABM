@@ -31,7 +31,7 @@ export const Login = () => {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:3001/api/user/login",
+        "https://rito-mono.herokuapp.com/api/user/login",
         {
           name: userName,
           password: password,
@@ -141,8 +141,7 @@ export const Login = () => {
           <br />
         </FormControl>
 
-        {/* agregarle ruta */}
-        <Link href="http://localhost:8000/">
+        <Link href="/">
           <Button
             backgroundColor=" #E32B6C"
             color="white"
@@ -163,7 +162,7 @@ export const Login = () => {
         </Text>
         <br />
         <Box color="#E32B6C">
-          <Link color="#E32B6C" href="http://localhost:8000/register">
+          <Link color="#E32B6C" href="/register">
             Si no tienes un usuario registrate aqui.
           </Link>
         </Box>
