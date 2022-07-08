@@ -28,12 +28,11 @@ export const Register = () => {
   const [nameError, setNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-
-    const expresiones = {
-        userName: (/^[a-zA-ÿ\s]{1,40}$/), //letras y espacios 
-        password: (/^(?=.*[A-Z]).{6,15}$/), //que contenga de 6 a 15 digitos y al menos una mayuscula.
-        email: (/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/) //verifica que sea un email
-    }
+  const expresiones = {
+    userName: /^[a-zA-ÿ\s]{1,40}$/, //letras y espacios
+    password: /^(?=.*[A-Z]).{6,15}$/, //que contenga de 6 a 15 digitos y al menos una mayuscula.
+    email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, //verifica que sea un email
+  };
 
   const handleName = (e) => {
     setNameError(false);
@@ -53,31 +52,31 @@ export const Register = () => {
   const handleClick = (e) => {
     e.preventDefault();
 
-    if(!expresiones.userName.test(name)){
-        setNameError(true)
+    if (!expresiones.userName.test(name)) {
+      setNameError(true);
     }
-    if(!expresiones.email.test(email)){
-        setEmailError(true)
+    if (!expresiones.email.test(email)) {
+      setEmailError(true);
     }
-    if(!expresiones.password.test(password)){
-        setPasswordError(true)
+    if (!expresiones.password.test(password)) {
+      setPasswordError(true);
     }
 
-    if(!nameError && !mailError && !passwordError ){
-            axios
-            .post("http://localhost:3001/api/user/register", {
-              email: email,
-              password: password,
-              name: name,
-            })
-            .then((res) => {
-                alert("User created succesfully");
-                router.push("/");
-              })
-              .catch((err) => {
-                console.log(err);
-                //alert(err.response.data.message);
-              });
+    if (!nameError && !mailError && !passwordError) {
+      axios
+        .post("http://localhost:3001/api/user/register", {
+          email: email,
+          password: password,
+          name: name,
+        })
+        .then((res) => {
+          alert("User created succesfully");
+          router.push("/");
+        })
+        .catch((err) => {
+          alert(err.response.data);
+          //alert(err.response.data.message);
+        });
     }
   };
 
@@ -120,9 +119,9 @@ export const Register = () => {
           {!nameError ? (
             <FormHelperText>Ingresá tu cuenta de Redacción WOW.</FormHelperText>
           ) : (
-            <Alert status='error'>
-            <AlertIcon />
-            <AlertTitle>Campo obligatorio</AlertTitle>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle>Campo obligatorio</AlertTitle>
             </Alert>
           )}
         </FormControl>
@@ -140,9 +139,11 @@ export const Register = () => {
           {!mailError ? (
             <FormHelperText>Email personal.</FormHelperText>
           ) : (
-            <Alert status='error'>
-            <AlertIcon />
-            <AlertTitle>Introduzca una dirección de correo electrónico válida</AlertTitle>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle>
+                Introduzca una dirección de correo electrónico válida
+              </AlertTitle>
             </Alert>
           )}
         </FormControl>
@@ -164,14 +165,18 @@ export const Register = () => {
           />
           {!passwordError ? (
             <FormHelperText>
-              Ingresá una una clave que contenga entre 6 y 12 caracteres y al menos una letra mayúscula.
+              Ingresá una una clave que contenga entre 6 y 12 caracteres y al
+              menos una letra mayúscula.
             </FormHelperText>
           ) : (
-            <Alert status='error'>
-            <AlertIcon />
-            <AlertTitle>Su contraseña debe tener entre 6 y 12 caracteres y contener una letra mayúscula</AlertTitle>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle>
+                Su contraseña debe tener entre 6 y 12 caracteres y contener una
+                letra mayúscula
+              </AlertTitle>
             </Alert>
-            )}
+          )}
           <br />
         </FormControl>
 

@@ -11,7 +11,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  AlertDescription
+  AlertDescription,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
@@ -21,33 +21,30 @@ import { useRouter } from "next/router";
 import { AuthContext } from "../Context/AuthContext";
 
 export const Login = () => {
-
+  const router = useRouter();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
-
-  const [validation, setValidation] = useState(true)
-
+  const [validation, setValidation] = useState(true);
   const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
+
   const handlerSubmit = (e) => {
     e.preventDefault();
-
-
-
     axios
-      .post("http://localhost:3001/api/user/login", {
-        name: userName,
-        password: password,
-      })
+      .post(
+        "http://localhost:3001/api/user/login",
+        {
+          name: userName,
+          password: password,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
-
         toggleAuth(res.data);
         alert(`Welcome ${res.data.name}`);
         router.push("edition/Historias");
-
       })
       .catch((err) => {
-          setValidation(false)
+        setValidation(false);
       });
   };
 
@@ -66,26 +63,28 @@ export const Login = () => {
       justify-content="flex-end"
       position="relative"
     >
-        {!validation?(
-            <Alert
-            status='error'
-            variant='subtle'
-            flexDirection='column'
-            alignItems='center'
-            justifyContent='center'
-            textAlign='center'
-            height='200px'
-            width="350px"
-            position="fixed"
-            margin="0 auto"
-            left="35%"
-            >
-            <AlertIcon boxSize='40px' mr={0} />
-            <AlertDescription  maxWidth='sm'>
-                Usuario y/o contraseña incorrecta.
-            </AlertDescription>
-            </Alert>
-        ):(<></>)}
+      {!validation ? (
+        <Alert
+          status="error"
+          variant="subtle"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          height="200px"
+          width="350px"
+          position="fixed"
+          margin="0 auto"
+          left="35%"
+        >
+          <AlertIcon boxSize="40px" mr={0} />
+          <AlertDescription maxWidth="sm">
+            Usuario y/o contraseña incorrecta.
+          </AlertDescription>
+        </Alert>
+      ) : (
+        <></>
+      )}
 
       <Box width="40%" margin="10px 5% 1em">
         <Text color="#ED2D6E" textAlign="start" p="0.25em" fontSize="40px">
@@ -100,9 +99,6 @@ export const Login = () => {
             <br />
           </Text>
         </b>
-
-        
-
 
         <FormControl>
           <b>
@@ -147,7 +143,7 @@ export const Login = () => {
 
         {/* agregarle ruta */}
         <Link href="http://localhost:8000/">
-            <Button
+          <Button
             backgroundColor=" #E32B6C"
             color="white"
             borderRadius="40px"
@@ -155,18 +151,18 @@ export const Login = () => {
             height="50px"
             textAlign="center"
             onClick={handlerSubmit}
-            >
+          >
             Iniciar sesión
-            </Button>
+          </Button>
         </Link>
         <br />
 
-        <Text color="#E32B6C" >
+        <Text color="#E32B6C">
           <br />
           ¿Olvidaste tu clave?
         </Text>
         <br />
-        <Box color="#E32B6C" >
+        <Box color="#E32B6C">
           <Link color="#E32B6C" href="http://localhost:8000/register">
             Si no tienes un usuario registrate aqui.
           </Link>
