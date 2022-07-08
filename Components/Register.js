@@ -65,7 +65,7 @@ export const Register = () => {
 
     if(!nameError && !mailError && !passwordError ){
             axios
-            .post("http://localhost:3001/api/user/register", {
+            .post("https://rito-mono.herokuapp.com/api/user/register", {
               email: email,
               password: password,
               name: name,

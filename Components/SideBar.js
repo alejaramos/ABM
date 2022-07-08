@@ -170,7 +170,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
   const logoutHandler = () => {
     axios
-      .post("http://localhost:3001/api/user/logout")
+      .post("https://rito-mono.herokuapp.com/api/user/logout")
       .then(()=>toggleAuth(null))
       .then(() => router.push("/"))
       .catch((err) => console.log(err));
