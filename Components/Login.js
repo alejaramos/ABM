@@ -39,6 +39,7 @@ export const Login = () => {
         { withCredentials: true }
       )
       .then((res) => {
+        console.log(res);
         toggleAuth(res.data);
         alert(`Welcome ${res.data.name}`);
         router.push("edition/Historias");

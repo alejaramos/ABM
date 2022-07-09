@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/user/me", {
+      .get("https://rito-mono.herokuapp.com/api/user/me", {
         withCredentials: true,
       })
       .then((res) => {
