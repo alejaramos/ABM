@@ -3,13 +3,12 @@ import {
   Heading,
   Button,
   Stack,
-  Center,
-  Spacer,
   Container,
   FormControl,
   FormLabel,
   Input,
   Text,
+
 } from "@chakra-ui/react";
 
 import HeaderDrawer from "./HeaderDrawer";
@@ -17,6 +16,8 @@ import useInput from "../hooks/useInput";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import SelectButton from "./SelectButton";
+import text from "../utils/Text"
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -36,31 +37,14 @@ const ArticleEdition = () => {
   const OList = useInput();
   const IMG = useInput();
 
-  const text = [
-    {
-      id: "item-1",
-      type: "SectionTitle",
-      content: "los cuerpos",
-    },
-    {
-      id: "item-2",
-      type: "Paragraph",
-      content: Paragraph.value,
-    },
-    {
-      id: "item-3",
-      type: "OList",
-      content: "-uno, -dos",
-    },
-    {
-      id: "item-4",
-      type: "IMG",
-      content:
-        "https://www.ospat.com.ar/wp-content/uploads/2017/05/Dear-Kate.jpg",
-    },
-  ];
+  
 
-  //handlesubmit
+
+
+
+
+    //handlesubmit
+
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -195,11 +179,14 @@ const ArticleEdition = () => {
                       >
                         {(provided, snapshot) => (
                           <Box
-                            className="card"
-                            
+                          border='2px' borderColor='black'  
+                          borderRadius='10px'   
+                          padding="20px"   
+                          margin="20px"                
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
+                            snapshot={snapshot}
                           >
                             <FormControl id={item.content}>
                               <FormLabel>{item.type}</FormLabel>
@@ -214,6 +201,8 @@ const ArticleEdition = () => {
                 )}
               </Droppable>
             </DragDropContext>
+     <SelectButton></SelectButton>
+
           </Box>
         
       </Container>

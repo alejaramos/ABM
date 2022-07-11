@@ -166,7 +166,7 @@ export default function HeaderDrawer() {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">{user.name}</Text>
+                  {/* <Text fontSize="sm">{user.name}</Text> */}
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>
@@ -196,7 +196,7 @@ export default function HeaderDrawer() {
 const NavItem = ({ icon, children, ...rest }) => {
   return (
     <Link
-      href={`http://localhost:3000/edition/${children}`}
+      href={`http://localhost:8000/edition/${children}`}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
