@@ -35,8 +35,8 @@ export const Login = () => {
         {
           name: userName,
           password: password,
-        },
-        { withCredentials: true }
+        }
+        // { withCredentials: true }
       )
       .then((res) => {
         console.log(res);

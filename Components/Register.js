@@ -64,11 +64,15 @@ export const Register = () => {
 
     if (!nameError && !mailError && !passwordError) {
       axios
-        .post("https://rito-mono.herokuapp.com/api/user/register", {
-          email: email,
-          password: password,
-          name: name,
-        })
+        .post(
+          "https://rito-mono.herokuapp.com/api/user/register",
+          {
+            email: email,
+            password: password,
+            name: name,
+          },
+          { withCredentials: true }
+        )
         .then((res) => {
           alert("Bienvenido");
           router.push("/");

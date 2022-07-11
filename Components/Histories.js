@@ -34,14 +34,18 @@ const Histories = ({ newses }) => {
 
     result.length == 0 ? setRenderedNews(newses) : setRenderedNews(result);
   };
-
   useEffect(() => {
     axios
-      .get("https://rito-mono.herokuapp.com/api/user/me", {
-        withCredentials: true,
+      .get(
+        "https://rito-mono.herokuapp.com/api/user/me"
+        // { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
       })
-      .then((res) => console.log(res, "SOY RES"))
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (

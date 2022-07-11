@@ -10,17 +10,27 @@ import { AuthContext } from "../Context/AuthContext";
 
 export default function Home() {
   const router = useRouter();
+  // useEffect(() => {
+  //   axios
+  //     .get("https://rito-mono.herokuapp.com/api/user/me", {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       if (res.data._id) router.push("edition/Historias");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+
+  // }, []);
+
   useEffect(() => {
     axios
       .get("https://rito-mono.herokuapp.com/api/user/me", {
         withCredentials: true,
       })
-      .then((res) => {
-        if (res.data._id) router.push("edition/Historias");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((res) => console.log(res, "SOY RES"))
+      .catch((err) => console.log("soy error", err));
   }, []);
 
   return (
