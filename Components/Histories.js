@@ -37,8 +37,11 @@ const Histories = ({ newses }) => {
   useEffect(() => {
     axios
       .get(
-        "https://rito-mono.herokuapp.com/api/user/me"
-        // { withCredentials: true }
+        // "http://localhost:3001/api/user/me",
+        "https://rito-mono.herokuapp.com/api/user/me",
+        {
+          withCredentials: true,
+        }
       )
       .then((res) => {
         console.log(res);

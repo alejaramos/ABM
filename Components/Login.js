@@ -31,12 +31,13 @@ export const Login = () => {
     e.preventDefault();
     axios
       .post(
+        // "http://localhost:3001/api/user/login",
         "https://rito-mono.herokuapp.com/api/user/login",
         {
           name: userName,
           password: password,
-        }
-        // { withCredentials: true }
+        },
+        { withCredentials: true }
       )
       .then((res) => {
         console.log(res);
