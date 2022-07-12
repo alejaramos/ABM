@@ -78,7 +78,7 @@ export const Register = () => {
           router.push("/");
         })
         .catch((err) => {
-          alert("No pudo registrarse");
+          alert("No pudo registrarse", err);
           console.log(err);
         });
     }
