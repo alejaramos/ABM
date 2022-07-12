@@ -70,8 +70,8 @@ export const Register = () => {
             email: email,
             password: password,
             name: name,
-          },
-          { withCredentials: true }
+          }
+          // { withCredentials: true }
         )
         .then((res) => {
           alert("Bienvenido");
