@@ -8,78 +8,101 @@ import {
   Select,
   FormControl,
   Heading,
+  Flex,
   VStack,
+  List,
+  ListItem,
 } from "@chakra-ui/react";
-import EmotionMenu from "../Common/EmotionMenu";
-import SchemaMenu from "../Common/SchemaMenu";
-import Link from "next/link";
 
-const Diagramation = () => {
+import SchemaMenu from "../Common/SchemaMenu";
+import useInput from "../hooks/useInput";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { SchemaContext } from "../Context/SchemaContext";
+import SectionTable from "./SectionTable";
+
+const Diagramation = ({ sections }) => {
+  const title = useInput();
+
+  const { schema, setChema } = useContext(SchemaContext);
+
+  //   const handleSubmit = () => {
+  //     axios
+  //       .post("https://rito-mono.herokuapp.com/api/sections/create", {
+  //         title: title,
+  //         //schema: schema,
+  //       })
+  //       .then((res) => {
+  //         console.log(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+
   return (
-    <Box px="3em" ml={"13em"} backgroundColor="#fcf2f6" justifyContent="right">
+    <Box>
       <Box
-        display="flex"
-        flexDir="row"
-        justifyContent="space-between"
-        py="0.25em"
+        px="3em"
+        ml={"13em"}
+        backgroundColor="#fcf2f6"
+        justifyContent="right"
       >
-        <Heading>Secciones</Heading>
-      </Box>
-      <Box
-        width="90%"
-        borderWidth="2px"
-        borderColor="#E32B6C"
-        borderRadius="1%"
-        backgroundColor="white"
-        p="1em"
-      >
-        <FormControl>
-          <Grid templateColumns="repeat(3, 1fr)" gap={3}>
-            <Box>
-              <FormLabel>Nombre de seccion</FormLabel>
-              <Input id="title" type="text" placeholder="Palabras Clave" />
-            </Box>
-            <Box>
+        <Box
+          display="flex"
+          flexDir="row"
+          justifyContent="space-between"
+          py="0.25em"
+        >
+          <Heading>Secciones</Heading>
+        </Box>
+        <Box
+          width="90%"
+          borderWidth="2px"
+          borderColor="#E32B6C"
+          borderRadius="1%"
+          backgroundColor="white"
+          p="1em"
+        >
+          <FormControl
+          // onSubmit={() => {
+          //   handleSubmit;
+          // }}
+          >
+            <Grid templateColumns="repeat(2, 1fr)" gap={3}>
+              <Box>
+                <FormLabel>Nombre de seccion</FormLabel>
+                <Input {...title} id="title" type="text" placeholder="Titulo" />
+              </Box>
+              {/* <Box>
               <FormLabel>Contenido</FormLabel>
               <EmotionMenu />
-            </Box>
-            <Box>
+            </Box> */}
+              <Flex alignItems={"flex-end"} justifyContent={"center"}>
+                <Button
+                  backgroundColor=" #E32B6C"
+                  color="white"
+                  borderRadius="40px"
+                  my="0.5em"
+                  height="30px"
+                  width="30%"
+                >
+                  Enviar
+                </Button>
+              </Flex>
+            </Grid>
+            <Box width={"100%"}>
               <FormLabel>Schema</FormLabel>
               <SchemaMenu />
             </Box>
-
-            <Button
-              backgroundColor=" #E32B6C"
-              color="white"
-              borderRadius="40px"
-              my="0.5em"
-              height="30px"
-              width="30%"
-            >
-              Enviar
-            </Button>
-          </Grid>
-        </FormControl>
+          </FormControl>
+        </Box>
       </Box>
-      <Heading>Secciones actuales</Heading>
+      <Box px="3em" ml={"13em"} justifyContent="right">
+        <SectionTable sections={sections} />
+      </Box>
     </Box>
   );
 };
 
 export default Diagramation;
-//  return (
-//     <VStack>
-//       <Heading size="xl">Editar secciones</Heading>
-//       <div> SECCIONES</div>
-//       <div>
-//         ULTIMAS NOTICIAS <EmotionMenu />
-//       </div>
-//       <div>
-//         DIMENSIONES <EmotionMenu />
-//       </div>
-//       <div>
-//         AMOR
-//         <EmotionMenu />
-//       </div>
-//     </VStack>
-//   );
