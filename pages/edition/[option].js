@@ -14,7 +14,7 @@ import WorkingOn from "../../Components/WorkingOn";
 import SidebarWithHeader from "../../Components/SideBar";
 import Diagramation from "../../Components/Diagramation";
 
-export default function Option({ newses }) {
+export default function Option({ newses, sections }) {
   const [isMobile] = useMediaQuery("(max-width: 912px)");
   const router = useRouter();
   const { option } = router.query;
@@ -31,7 +31,7 @@ export default function Option({ newses }) {
           {option === "Historias" ? (
             <Histories newses={newses} />
           ) : option === "diagramas" ? (
-            <Diagramation />
+            <Diagramation sections={sections} />
           ) : (
             <WorkingOn />
           )}
@@ -42,8 +42,23 @@ export default function Option({ newses }) {
     </>
   );
 }
+// export async function getServerSideProps() {
+//   const req = await fetch(`https://rito-mono.herokuapp.com/api/news/newses`);
+//   const data = await req.json();
+//   // console.log("🚀 ~ file: Histories.js ~ line 70 ~ getServerSideProps ~ data", data)
+//   return { props: { newses: data } };
+// }
 export async function getServerSideProps() {
-  const req = await fetch(`https://rito-mono.herokuapp.com/api/news/newses`);
-  const data = await req.json();
-  return { props: { newses: data } };
+
+  const [newsesReq, sectionsReq] = await Promise.all([
+    fetch(`https://rito-mono.herokuapp.com/api//news/newses/`),
+    fetch(`https://rito-mono.herokuapp.com/api/section/`),
+  ]);
+  const [newses, sections] = await Promise.all([
+    newsesReq.json(),
+    sectionsReq.json(),
+  ]);
+
+  return { props: { newses: newses, sections: sections } };
+
 }
