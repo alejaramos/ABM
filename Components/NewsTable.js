@@ -105,7 +105,7 @@ const NewsTable = ({ newses }) => {
                 <Td>{news.title}</Td>
                 <Td>{news.field_credits}</Td>
                 <Td>{news.field_category}</Td>
-                <Td isNumeric>10-10-22</Td>
+                <Td isNumeric>{news.publication_date?.slice(2,10)||"10-10-22"}</Td>
                 <Td>Publicado</Td>
                 <Td>
                   <IconButton

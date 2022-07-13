@@ -18,7 +18,6 @@ const SelectButton = () => {
   //handleAdd
   const handlerAdd = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     text.push({
         id: "item-2",
         type: e.target.value,
@@ -42,16 +41,18 @@ const SelectButton = () => {
       bg="hsl(342deg 68% 56%)"
       variant="outline"
       size="sm"
-      onChange={handlerAdd}
+      onChangeCapture={handlerAdd}
+     
       placeholder="Agregar más secciones"
       closeMenuOnSelect={true}
     >
-      <option value="Imagen">Imagen</option>
-      <option value="I-frame">I-frame</option>
-      <option value="O-List">O List</option>
+      <option value="IMG">Imagen</option>
+      <option value="Iframe">I-frame</option>
+      <option value="OList">O List</option>
       <option value="Paragraph">Paragraph</option>
-      <option value="opQuotetion2">Quote</option>
-      <option value="U-list">U list</option>
+      <option value="Quote">Quote</option>
+      <option value="UList">U list</option>
+      <option value="SectionTitle">Section Title</option>
     </Select>
   );
 };

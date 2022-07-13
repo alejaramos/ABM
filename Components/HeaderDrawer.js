@@ -51,7 +51,7 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
-import {useContext} from "react";
+import { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AuthContext } from "../Context/AuthContext";
@@ -74,7 +74,7 @@ const LinkItems = [
 
 export default function HeaderDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
   const router = useRouter();
   const logoutHandler = () => {
@@ -113,7 +113,7 @@ export default function HeaderDrawer() {
               borderBottomWidth="1px"
               fontWeight="900"
               color="#ED2D6E"
-              fontSize="30px"
+              fontSize="40px"
               alignItems="center"
             >
               WOW
@@ -130,8 +130,8 @@ export default function HeaderDrawer() {
       </Drawer>
 
       <Text
-        fontSize="2xl"
-        fontFamily="monospace"
+        fontSize="40px"
+        // fontFamily="monospace"
         fontWeight="900"
         color="#ED2D6E"
         alignItems="center"
