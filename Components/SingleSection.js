@@ -28,10 +28,9 @@ import {
 import useInput from "../hooks/useInput";
 import axios from "axios";
 
-const SingleSection = ({ section, setModified }) => {
+const SingleSection = ({ section }) => {
   const [edit, setEdit] = useState(false);
   const newTitle = useInput();
-  //   const { modified, setModified, saveModified } = useContext(SchemaContext);
   const { schema, setSchema } = useContext(SchemaContext);
   const removeAlert = useDisclosure();
   const modifyAlert = useDisclosure();
@@ -50,6 +49,7 @@ const SingleSection = ({ section, setModified }) => {
           isClosable: true,
           position: "top",
         });
+        window.location.reload();
       })
 
       .catch((code) => console.error("error", code));
@@ -85,17 +85,6 @@ const SingleSection = ({ section, setModified }) => {
     console.log(e.target.value);
     if (e.target.value) setSchema(e.target.value);
   };
-
-  //   useEffect(() => {
-  //     axios
-  //       .get(`https://rito-mono.herokuapp.com/api/section/${section._id}`)
-  //       .then((res) => console.log("HOLA", res))
-  //       .catch((err) => console.log("error", err));
-  //     // const response = await axios.get(
-  //     //     `https://rito-mono.herokuapp.com/api/section/${section._id}`
-  //     //   ),
-  //     //   section = await response.data;
-  //   }, []);
 
   return (
     <>

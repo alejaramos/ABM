@@ -12,6 +12,7 @@ import {
   VStack,
   List,
   ListItem,
+  useToast,
 } from "@chakra-ui/react";
 
 import SchemaMenu from "../Common/SchemaMenu";
@@ -20,25 +21,43 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { SchemaContext } from "../Context/SchemaContext";
 import SectionTable from "./SectionTable";
+import { Router, useRouter } from "next/router";
 
 const Diagramation = ({ sections }) => {
+  const [renderedSections, setRenderedSections] = useState(sections);
   const title = useInput();
+  const toast = useToast();
 
   const { schema, setChema } = useContext(SchemaContext);
 
-  //   const handleSubmit = () => {
-  //     axios
-  //       .post("https://rito-mono.herokuapp.com/api/sections/create", {
-  //         title: title,
-  //         //schema: schema,
-  //       })
-  //       .then((res) => {
-  //         console.log(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
+  const handleSubmit = () => {
+    axios
+      .post("https://rito-mono.herokuapp.com/api/section/", {
+        title: title.value,
+        schema: schema,
+        color: "#ec4f6c",
+      })
+      .then((res) => {
+        toast({
+          title: "Creado exitosamente",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+        window.location.reload();
+      })
+      .catch((err) => {
+        toast({
+          title: "No se pudo crear",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+        console.log(err);
+      });
+  };
 
   return (
     <Box>
@@ -64,11 +83,7 @@ const Diagramation = ({ sections }) => {
           backgroundColor="white"
           p="1em"
         >
-          <FormControl
-          // onSubmit={() => {
-          //   handleSubmit;
-          // }}
-          >
+          <FormControl>
             <Grid templateColumns="repeat(2, 1fr)" gap={3}>
               <Box>
                 <FormLabel>Nombre de seccion</FormLabel>
@@ -86,6 +101,7 @@ const Diagramation = ({ sections }) => {
                   my="0.5em"
                   height="30px"
                   width="30%"
+                  onClick={handleSubmit}
                 >
                   Crear
                 </Button>
@@ -99,7 +115,7 @@ const Diagramation = ({ sections }) => {
         </Box>
       </Box>
       <Box px="3em" ml={"13em"} justifyContent="right">
-        <SectionTable sections={sections} />
+        <SectionTable sections={renderedSections} />
       </Box>
     </Box>
   );

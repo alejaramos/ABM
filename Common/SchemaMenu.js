@@ -14,26 +14,26 @@ const SchemaMenu = () => {
       <Stack justifyContent={"space-between"} direction="row">
         <VStack border={"1px"}>
           <Image src="/SchemaA.png" boxSize="200px" />
-          <Radio value="SchemaA" onChange={handleChange}>
+          <Radio value="<SchemaA/>" onChange={handleChange}>
             {" "}
             Schema A
           </Radio>
         </VStack>
         <VStack border={"1px"}>
           <Image src="/SchemaB.png" borderColor={"#000000"} boxSize="200px" />
-          <Radio value="SchemaB" onChange={handleChange}>
+          <Radio value="<SchemaB/>" onChange={handleChange}>
             Schema B
           </Radio>
         </VStack>
         <VStack border={"1px"}>
           <Image src="/SchemaC.png" borderColor={"#000000"} boxSize="200px" />
-          <Radio value="SchemaC" onChange={handleChange}>
+          <Radio value="<SchemaC/>" onChange={handleChange}>
             Schema C
           </Radio>
         </VStack>
         <VStack border={"1px"}>
           <Image src="/SchemaD.png" borderColor={"#000000"} boxSize="200px" />
-          <Radio value="SchemaD" onChange={handleChange}>
+          <Radio value="<SchemaD/>" onChange={handleChange}>
             Schema D
           </Radio>
         </VStack>
