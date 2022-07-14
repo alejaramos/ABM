@@ -12,6 +12,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
@@ -26,7 +27,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [validation, setValidation] = useState(true);
   const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
-
+  const toast = useToast();
   const handlerSubmit = (e) => {
     e.preventDefault();
     axios
@@ -42,11 +43,24 @@ export const Login = () => {
       .then((res) => {
         console.log(res);
         toggleAuth(res.data);
-        alert(`Welcome ${res.data.name}`);
+        toast({
+          title: `Welcome ${res.data.name}`,
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+          position: "top",
+        });
         router.push("edition/Historias");
       })
       .catch((err) => {
-        setValidation(false);
+        console.log(err);
+        toast({
+          title: "Wrong user or password",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
       });
   };
 
@@ -65,29 +79,6 @@ export const Login = () => {
       justify-content="flex-end"
       position="relative"
     >
-      {!validation ? (
-        <Alert
-          status="error"
-          variant="subtle"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          textAlign="center"
-          height="200px"
-          width="350px"
-          position="fixed"
-          margin="0 auto"
-          left="35%"
-        >
-          <AlertIcon boxSize="40px" mr={0} />
-          <AlertDescription maxWidth="sm">
-            Usuario y/o contraseña incorrecta.
-          </AlertDescription>
-        </Alert>
-      ) : (
-        <></>
-      )}
-
       <Box width="40%" margin="10px 5% 1em">
         <Text color="#ED2D6E" textAlign="start" p="0.25em" fontSize="40px">
           WOW!

@@ -13,6 +13,7 @@ import {
   InputGroup,
   Select,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import HeaderDrawer from "./HeaderDrawer";
@@ -23,7 +24,6 @@ import axios from "axios";
 import SelectButton from "./SelectButton";
 import { useConst } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -38,7 +38,7 @@ const ArticleEdition = () => {
   const volanta = useInput();
   const category = useInput();
   const autor = useInput();
-   const Paragraph = useInput();
+  const Paragraph = useInput();
   const Iframe = useInput();
   const UList = useInput();
   const SectionTitle = useInput();
@@ -47,7 +47,7 @@ const ArticleEdition = () => {
   const IMG = useInput();
   const date = useInput();
   const router = useRouter();
-
+  const toast = useToast();
   //handlesubmit
 
   const handlerSubmit = (e) => {
@@ -65,11 +65,24 @@ const ArticleEdition = () => {
         publication_date: trimDate,
       })
       .then((res) => {
-        alert(`guardada con exito`);
+        toast({
+          title: "Creada exitosamente",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
         router.push("/edition/Historias");
       })
       .catch((err) => {
-        alert("prueba de nuevo"), console.log(err);
+        toast({
+          title: "Intenta nuevamente",
+          status: "warning",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+        console.log(err);
       });
   };
 
@@ -102,8 +115,11 @@ const ArticleEdition = () => {
       content: undefined,
       // fn: useInput()
     };
-    console.log("🚀 ~ file: ArticleEdition.js ~ line 104 ~ handlerAdd ~ fn", newItem.fn)
-    
+    console.log(
+      "🚀 ~ file: ArticleEdition.js ~ line 104 ~ handlerAdd ~ fn",
+      newItem.fn
+    );
+
     setItems([...items, newItem]);
   };
 
