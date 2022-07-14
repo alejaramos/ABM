@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { SchemaContext } from "../Context/SchemaContext";
 import {
   Input,
@@ -49,6 +49,7 @@ const SingleSection = ({ section }) => {
           isClosable: true,
           position: "top",
         });
+        window.location.reload();
       })
 
       .catch((code) => console.error("error", code));
