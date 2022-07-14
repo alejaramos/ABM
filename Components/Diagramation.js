@@ -87,7 +87,7 @@ const Diagramation = ({ sections }) => {
                   height="30px"
                   width="30%"
                 >
-                  Enviar
+                  Crear
                 </Button>
               </Flex>
             </Grid>

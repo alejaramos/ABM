@@ -19,12 +19,14 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon, CheckCircleIcon } from "@chakra-ui/icons";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import SingleSection from "./SingleSection";
+import { SchemaContext } from "../Context/SchemaContext";
 
 const SectionTable = ({ sections }) => {
   const [renderedSections, setRenderedSections] = useState(sections);
+  const { modified, setModified, saveModified } = useContext(SchemaContext);
   const [i, setI] = useState();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const cancelRef = useRef();
@@ -97,10 +99,9 @@ const SectionTable = ({ sections }) => {
                 <Th>Opciones</Th>
               </Tr>
             </Thead>
-
             <Tbody backgroundColor="white">
               {renderedSections.map((section) => (
-                <SingleSection section={section} />
+                <SingleSection setModified={setModified} section={section} />
                 // <Tr _hover={{ backgroundColor: "#fcc7dd" }}>
                 //   <Td id={section._id}>{section.title}</Td>
                 //   <Td>

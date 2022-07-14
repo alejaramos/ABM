@@ -4,7 +4,6 @@ import { SchemaContext } from "../Context/SchemaContext";
 
 const SchemaMenu = () => {
   const { schema, setSchema } = useContext(SchemaContext);
-  console.log(schema);
 
   const handleChange = (e) => {
     setSchema(e.target.value);
