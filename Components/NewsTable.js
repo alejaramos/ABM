@@ -92,8 +92,8 @@ const NewsTable = ({ newses }) => {
             </Tr>
           </Thead>
           <Tbody backgroundColor="white">
-            {renderedNews.map((news) => (
-              <Tr _hover={{ backgroundColor: "#fcc7dd" }}>
+            {renderedNews.map((news, i) => (
+              <Tr key={i} _hover={{ backgroundColor: "#fcc7dd" }}>
                 <Td>
                   <Image
                     boxSize="80px"
