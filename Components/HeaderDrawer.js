@@ -198,7 +198,7 @@ export default function HeaderDrawer() {
 const NavItem = ({ icon, children, ...rest }) => {
   return (
     <Link
-      href={`http://localhost:8000/edition/${children}`}
+      href={`/edition/${children}`}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
