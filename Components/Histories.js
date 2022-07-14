@@ -34,22 +34,6 @@ const Histories = ({ newses }) => {
 
     result.length == 0 ? setRenderedNews(newses) : setRenderedNews(result);
   };
-  useEffect(() => {
-    axios
-      .get(
-        // "http://localhost:3001/api/user/me",
-        "https://rito-mono.herokuapp.com/api/user/me",
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <Box px="3em" ml={"13em"} backgroundColor="#fcf2f6" justifyContent="right">

@@ -12,6 +12,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
@@ -19,6 +20,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 export const Register = () => {
+  const toast = useToast();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -70,16 +72,28 @@ export const Register = () => {
             email: email,
             password: password,
             name: name,
-          },
-          { withCredentials: true }
+          }
+          // { withCredentials: true }
         )
         .then((res) => {
-          alert("Bienvenido");
+          toast({
+            title: "Bienvenido",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+            position: "top",
+          });
           router.push("/");
         })
         .catch((err) => {
-          alert("No pudo registrarse", err);
-          console.log(err);
+          toast({
+            title: "No pudo registrarse",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+            position: "top",
+          });
+          console.log(err.response.data);
         });
     }
   };

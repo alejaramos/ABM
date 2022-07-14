@@ -41,7 +41,7 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
-import {useContext} from "react";
+import { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -49,13 +49,13 @@ import { AuthContext } from "../Context/AuthContext";
 
 const LinkItems = [
   { name: "Historias", icon: FiFileText },
+  { name: "Diagramacion", icon: FiInbox },
   { name: "Recetas", icon: FiCoffee },
   { name: "Horoscopo ", icon: FiStar },
   { name: "Play", icon: FiPlayCircle },
   { name: "Makers", icon: FiNavigation },
   { name: "Content Lab", icon: FiMinusSquare },
   { name: "Ads", icon: FiMonitor },
-  { name: "Diagramacion", icon: FiInbox },
   { name: "Estaticas", icon: FiLayout },
   { name: "Imagenes", icon: FiImage },
   { name: "Autores", icon: FiUser },
@@ -164,14 +164,13 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
-
   const router = useRouter();
   const { user, isAuthenticated, toggleAuth } = useContext(AuthContext);
 
   const logoutHandler = () => {
     axios
       .post("https://rito-mono.herokuapp.com/api/user/logout")
-      .then(()=>toggleAuth(null))
+      .then(() => toggleAuth(null))
       .then(() => router.push("/"))
       .catch((err) => console.log(err));
   };
