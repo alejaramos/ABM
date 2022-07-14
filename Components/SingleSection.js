@@ -15,6 +15,7 @@ import {
   AlertDialogContent,
   Flex,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 
 import {
@@ -34,26 +35,54 @@ const SingleSection = ({ section }) => {
   const removeAlert = useDisclosure();
   const modifyAlert = useDisclosure();
   const cancelRef = useRef();
+  const toast = useToast();
 
   const deleteClick = () => {
     axios
       .delete(`https://rito-mono.herokuapp.com/api/section/${section._id}`)
       .then(() => removeAlert.onClose())
+      .then(() => {
+        toast({
+          title: "Borrada exitosamente",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+      })
+
       .catch((code) => console.error("error", code));
   };
 
   const modifyClick = () => {
+    console.log(newTitle);
+    console.log(section._id);
+    const title = newTitle.value || section.title;
     axios
       .put(`https://rito-mono.herokuapp.com/api/section/${section._id}`, {
-        title: newTitle,
+        title: title,
         schema: schema,
       })
-      .then(() => modifyAlert.onClose())
-      .catch((code) => console.error("error", code));
+      .then(
+        () => modifyAlert.onClose(),
+        toast({
+          title: "Modificada exitosamente",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        }),
+        (section.title = title),
+        (section.schema = schema),
+        setEdit(false)
+      )
+
+      .catch((err) => console.log("error", err));
   };
 
   const handleChange = (e) => {
-    setSchema(e.target.value);
+    console.log(e.target.value);
+    if (e.target.value) setSchema(e.target.value);
   };
 
   return (
