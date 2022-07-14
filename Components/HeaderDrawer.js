@@ -120,9 +120,11 @@ export default function HeaderDrawer() {
             </DrawerHeader>
             <DrawerBody>
               {LinkItems.map((link) => (
+                <Link href={`/edition/${link.name}`}>
                 <NavItem key={link.name} icon={link.icon}>
                   {link.name}
                 </NavItem>
+                </Link>
               ))}
             </DrawerBody>
           </DrawerContent>
