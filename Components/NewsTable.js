@@ -20,8 +20,10 @@ import {
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const NewsTable = ({ newses }) => {
+  const router=useRouter()
   const [renderedNews, setRenderedNews] = useState(newses);
   const [i, setI] = useState();
   useEffect(() => {
@@ -45,6 +47,10 @@ const NewsTable = ({ newses }) => {
       })
       .catch((code) => console.error("error", code));
   };
+
+  const editClick=(url)=>{
+    router.push(`/selected/${url}`)
+  }
 
   return (
     <>
@@ -120,7 +126,8 @@ const NewsTable = ({ newses }) => {
                     border="none"
                     variant="outline"
                     colorScheme="blue"
-                    aria-label="Send email"
+                    aria-label="Edit news"
+                    onClick={()=>editClick(news.url)}
                     icon={<EditIcon />}
                   />
                 </Td>

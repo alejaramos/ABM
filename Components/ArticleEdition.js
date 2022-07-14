@@ -13,17 +13,15 @@ import {
   InputGroup,
   Select,
   Textarea,
+  useToast
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import HeaderDrawer from "./HeaderDrawer";
 import useInput from "../hooks/useInput";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import SelectButton from "./SelectButton";
-import { useConst } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -33,27 +31,22 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const ArticleEdition = () => {
-  const titulo = useInput();
-  const volanta = useInput();
-  const category = useInput();
-  const autor = useInput();
-   const Paragraph = useInput();
-  const Iframe = useInput();
-  const UList = useInput();
-  const SectionTitle = useInput();
-  const OList = useInput();
-  const Quote = useInput();
-  const IMG = useInput();
-  const date = useInput();
+const ArticleEdition = ({ news }) => {
+  const toast = useToast();
   const router = useRouter();
+  const titulo = useInput(news?.title);
+  const volanta = useInput(news?.subtitle);
+  const category = useInput(news?.field_category);
+  const autor = useInput(news?.field_credits);
+  const IMG = useInput(news?.field_img_primary);
+  const date = useInput(news?.publication_date);
 
+  const arr = [];
   //handlesubmit
 
   const handlerSubmit = (e) => {
     e.preventDefault();
     const trimDate = date.value.slice(0, 10);
-    console.log("entre", titulo.value, volanta.value, autor.value, items);
     axios
       .post("https://rito-mono.herokuapp.com/api/news", {
         title: titulo.value,
@@ -64,21 +57,78 @@ const ArticleEdition = () => {
         field_img_primary: IMG.value,
         publication_date: trimDate,
       })
-      .then((res) => {
-        alert(`guardada con exito`);
+      .then(() => {
+        toast({
+          position: "top",
+          title: "Hecho.",
+          description: "Has creado una nueva nota.",
+          status: "success",
+          duration: 1500,
+          isClosable: true,
+        });
         router.push("/edition/Historias");
       })
       .catch((err) => {
-        alert("prueba de nuevo"), console.log(err);
+        toast({
+          position: "top",
+          title: "ERROR.",
+          description: "No se pudo crear la nota.",
+          status: "error",
+          duration: 1500,
+          isClosable: true,
+        });
+        console.log(err);
+      });
+  };
+
+  const handlerUpdate = (e) => {
+    e.preventDefault();
+    const trimDate = date.value.slice(0, 10);
+    axios
+      .put(`https://rito-mono.herokuapp.com/api/news/${news._id}`, {
+        title: titulo.value,
+        subtitle: volanta.value,
+        field_credits: autor.value,
+        field_category: category.value,
+        content: items,
+        field_img_primary: IMG.value,
+        publication_date: trimDate,
+      })
+      .then((res) => {
+        toast({
+          position: "top",
+          title: "Hecho.",
+          description: "Has actualizado la nota.",
+          status: "success",
+          duration: 1500,
+          isClosable: true,
+        });
+        router.push("/edition/Historias");
+      })
+      .catch((err) => {
+        toast({
+          position: "top",
+          title: "ERROR.",
+          description: "No se pudo actualizar la nota.",
+          status: "error",
+          duration: 1500,
+          isClosable: true,
+        });
+        console.log(err);
       });
   };
 
   //drag and drop
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(news?.content || []);
 
-  // useEffect(() => {
-  //   setItems(text);
-  // }, []);
+  const arrInput = () => {
+    for (let i = 0; i < 50; i++) {
+      arr.push(useInput(news?.content[i]?.content));
+    }
+    return arr;
+  };
+
+  arrInput();
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -91,19 +141,16 @@ const ArticleEdition = () => {
       result.destination.index
     );
 
-    // console.log({ reorderedItems });
     setItems(reorderedItems);
   };
-  // const hookOfHooks=()=> eval(this.type).value==='string'? cont
+
   //deberia ser un push al arreglo de objetos a items
   const handlerAdd = (e) => {
     const newItem = {
       type: e.target.value,
       content: undefined,
-      // fn: useInput()
     };
-    console.log("🚀 ~ file: ArticleEdition.js ~ line 104 ~ handlerAdd ~ fn", newItem.fn)
-    
+
     setItems([...items, newItem]);
   };
 
@@ -112,7 +159,7 @@ const ArticleEdition = () => {
     const deltedItem = items[i];
     setItems(items.filter((item) => item !== deltedItem));
   };
-  const arr = [];
+
   return (
     <Box backgroundColor={"hsl(336deg 56% 98%)"} alignItems="center">
       <HeaderDrawer></HeaderDrawer>
@@ -129,23 +176,48 @@ const ArticleEdition = () => {
                 {titulo.value}
               </Heading>
 
-              <Button
-                _hover={{ bg: "#ED2D6E" }}
-                _active={{
-                  bg: "#dddfe2",
-                  transform: "scale(0.98)",
-                  borderColor: "#bec3c9",
-                }}
-                borderRadius="15px"
-                colorScheme="#ED2D6E"
-                color="white"
-                bg="hsl(342deg 68% 56%)"
-                variant="outline"
-                size="sm"
-                onClick={handlerSubmit}
-              >
-                Guardar
-              </Button>
+              {news ? (
+                <Button
+                  _hover={{ bg: "#ED2D6E" }}
+                  _active={{
+                    bg: "#dddfe2",
+                    transform: "scale(0.98)",
+                    borderColor: "#bec3c9",
+                  }}
+                  borderRadius="15px"
+                  colorScheme="#ED2D6E"
+                  color="white"
+                  bg="hsl(342deg 68% 56%)"
+                  // variant="outline"
+                  minWidth='100px'
+                  width='100px'
+                  size="sm"
+                  onClick={handlerUpdate}
+                >
+                  Actualizar
+                </Button>
+              ) : (
+                <Button
+                  _hover={{ bg: "#ED2D6E" }}
+                  _active={{
+                    bg: "#dddfe2",
+                    transform: "scale(0.98)",
+                    borderColor: "#bec3c9",
+                  }}
+                  borderRadius="15px"
+                  colorScheme="#ED2D6E"
+                  color="white"
+                  bg="hsl(342deg 68% 56%)"
+                  variant="outline"
+                  minWidth='100px'
+                  width='100px'
+                  size="sm"
+                  disabled={titulo.value.length === 0 ? "true" : null}
+                  onClick={handlerSubmit}
+                >
+                  + CREAR
+                </Button>
+              )}
             </Stack>
           </Box>
         </Container>
@@ -183,6 +255,15 @@ const ArticleEdition = () => {
             placeholder="Fecha de Publicación"
             value={date.value}
             onChange={date.onChange}
+          />
+        </FormControl>
+        <FormControl id="IMG">
+          <FormLabel>Imagen Principal</FormLabel>
+          <Input
+            type="url"
+            placeholder="Link a la imagen"
+            value={IMG.value}
+            onChange={IMG.onChange}
           />
         </FormControl>
 
@@ -225,14 +306,14 @@ const ArticleEdition = () => {
                             snapshot={snapshot}
                           >
                             <FormControl
-                              id={(item.content = eval(item.type).value)}
+                              id={(item.content = arr[indexS].value)}
                             >
                               <FormLabel>{item.type}</FormLabel>
                               <InputGroup>
                                 <Textarea
                                   placeholder={item.type}
-                                  value={eval(item.type).value}
-                                  onChange={eval(item.type).onChange}
+                                  value={arr[indexS].value}
+                                  onChange={arr[indexS].onChange}
                                 />
                                 <InputRightElement
                                   children={
@@ -258,7 +339,6 @@ const ArticleEdition = () => {
               )}
             </Droppable>
           </DragDropContext>
-          {/* <SelectButton ></SelectButton> */}
           <Select
             my="2em"
             hover={{ bg: "#ED2D6E" }}
