@@ -5,12 +5,11 @@ import {
   Tr,
   Th,
   TableContainer,
-  useDisclosure,
   Spinner,
   Flex,
 } from "@chakra-ui/react";
 
-import { useRef, useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import SingleSection from "./SingleSection";
 
