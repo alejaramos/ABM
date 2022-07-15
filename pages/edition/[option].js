@@ -42,12 +42,7 @@ export default function Option({ newses, sections }) {
     </>
   );
 }
-// export async function getServerSideProps() {
-//   const req = await fetch(`https://rito-mono.herokuapp.com/api/news/newses`);
-//   const data = await req.json();
-//   // console.log("🚀 ~ file: Histories.js ~ line 70 ~ getServerSideProps ~ data", data)
-//   return { props: { newses: data } };
-// }
+
 export async function getServerSideProps() {
   const [newsesReq, sectionsReq] = await Promise.all([
     fetch(`https://rito-mono.herokuapp.com/api//news/newses/`),

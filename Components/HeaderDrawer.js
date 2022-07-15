@@ -50,7 +50,7 @@ import {
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
-import { IconType } from "react-icons";
+import axios from 'axios'
 import { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -120,9 +120,11 @@ export default function HeaderDrawer() {
             </DrawerHeader>
             <DrawerBody>
               {LinkItems.map((link) => (
+                <Link href={`/edition/${link.name}`}>
                 <NavItem key={link.name} icon={link.icon}>
                   {link.name}
                 </NavItem>
+                </Link>
               ))}
             </DrawerBody>
           </DrawerContent>
@@ -196,7 +198,7 @@ export default function HeaderDrawer() {
 const NavItem = ({ icon, children, ...rest }) => {
   return (
     <Link
-      href={`http://localhost:8000/edition/${children}`}
+      href={`/edition/${children}`}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >

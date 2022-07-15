@@ -123,7 +123,6 @@ export const Login = () => {
             id="password"
             type="password"
             width="300px"
-            textAlign="center"
             value={password}
             onChange={handlerPassword}
           />
