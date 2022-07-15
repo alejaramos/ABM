@@ -28,7 +28,8 @@ import {
 import useInput from "../hooks/useInput";
 import axios from "axios";
 
-const SingleSection = ({ section }) => {
+const SingleSection = ({ fn, section }) => {
+  const [deleted, setDeleted] = useState("");
   const [edit, setEdit] = useState(false);
   const newTitle = useInput();
   const { schema, setSchema } = useContext(SchemaContext);
@@ -40,8 +41,8 @@ const SingleSection = ({ section }) => {
   const deleteClick = () => {
     axios
       .delete(`https://rito-mono.herokuapp.com/api/section/${section._id}`)
-      .then(() => removeAlert.onClose())
       .then(() => {
+        removeAlert.onClose();
         toast({
           title: "Borrada exitosamente",
           status: "success",
@@ -49,7 +50,7 @@ const SingleSection = ({ section }) => {
           isClosable: true,
           position: "top",
         });
-        window.location.reload();
+        fn(deleted);
       })
 
       .catch((code) => console.error("error", code));

@@ -4,26 +4,21 @@ import {
   Grid,
   Box,
   FormLabel,
-  Radio,
-  Select,
   FormControl,
   Heading,
   Flex,
-  VStack,
-  List,
-  ListItem,
   useToast,
 } from "@chakra-ui/react";
 
 import SchemaMenu from "../Common/SchemaMenu";
 import useInput from "../hooks/useInput";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { SchemaContext } from "../Context/SchemaContext";
 import SectionTable from "./SectionTable";
-import { Router, useRouter } from "next/router";
 
 const Diagramation = ({ sections }) => {
+  const [placeholder, setPlaceholder] = useState("Titulo");
   const [renderedSections, setRenderedSections] = useState(sections);
   const title = useInput();
   const toast = useToast();
@@ -31,32 +26,40 @@ const Diagramation = ({ sections }) => {
   const { schema, setChema } = useContext(SchemaContext);
 
   const handleSubmit = () => {
-    axios
-      .post("https://rito-mono.herokuapp.com/api/section/", {
-        title: title.value,
-        schema: schema,
-        color: "#ec4f6c",
-      })
-      .then((res) => {
-        toast({
-          title: "Creado exitosamente",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-          position: "top",
-        });
-        window.location.reload();
-      })
-      .catch((err) => {
-        toast({
-          title: "No se pudo crear",
+    schema
+      ? axios
+          .post("https://rito-mono.herokuapp.com/api/section/", {
+            title: title.value,
+            schema: schema,
+            color: "#ec4f6c",
+          })
+          .then((res) => {
+            toast({
+              title: "Creado exitosamente",
+              status: "success",
+              duration: 2000,
+              isClosable: true,
+              position: "top",
+            });
+            placeholder = "Titulo";
+          })
+          .catch((err) => {
+            toast({
+              title: "No se pudo crear",
+              status: "error",
+              duration: 2000,
+              isClosable: true,
+              position: "top",
+            });
+            console.log(err);
+          })
+      : toast({
+          title: "Debe seleccionar un esquema",
           status: "error",
           duration: 2000,
           isClosable: true,
           position: "top",
         });
-        console.log(err);
-      });
   };
 
   return (
@@ -87,7 +90,12 @@ const Diagramation = ({ sections }) => {
             <Grid templateColumns="repeat(2, 1fr)" gap={3}>
               <Box>
                 <FormLabel>Nombre de seccion</FormLabel>
-                <Input {...title} id="title" type="text" placeholder="Titulo" />
+                <Input
+                  {...title}
+                  id="title"
+                  type="text"
+                  placeholder={placeholder}
+                />
               </Box>
               {/* <Box>
               <FormLabel>Contenido</FormLabel>
